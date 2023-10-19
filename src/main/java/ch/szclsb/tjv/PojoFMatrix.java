@@ -1,4 +1,4 @@
-package ch.szclsb.jvpt;
+package ch.szclsb.tjv;
 
 import java.util.Arrays;
 

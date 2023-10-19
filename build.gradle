@@ -1,4 +1,4 @@
-import ch.szclsb.tjv.GenerateMatrixTask
+import ch.szclsb.tjv.task.GenerateMatrixTask
 
 plugins {
     id 'java'
@@ -16,7 +16,20 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
-tasks.register("generate", GenerateMatrixTask)
+tasks.register("generate", GenerateMatrixTask) {
+    outputDir = project.layout.buildDirectory.dir("generated/sources/matrices/java/main")
+    matrixPackage = "ch.szclsb.tjv"
+    matrices {
+        FMatrix2x2 {
+            rows = 2
+            columns = 2
+        }
+        FMatrix4x4 {
+            rows = 4
+            columns = 4
+        }
+    }
+}
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
@@ -27,6 +40,12 @@ java {
 }
 compileJava {
     dependsOn(generate)
+}
+
+sourceSets {
+    main {
+        java.srcDirs += project.layout.buildDirectory.dir("generated/sources/matrices/java/main")
+    }
 }
 
 test {
