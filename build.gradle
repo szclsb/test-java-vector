@@ -1,3 +1,5 @@
+import ch.szclsb.tjv.GenerateMatrixTask
+
 plugins {
     id 'java'
 }
@@ -14,12 +16,17 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
+tasks.register("generate", GenerateMatrixTask)
+
 java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+}
+compileJava {
+    dependsOn(generate)
 }
 
 test {
