@@ -29,7 +29,7 @@ public class PojoMatrixWriter extends FileWriter {
                             import java.util.Arrays;
                                                 
                             public class %2$s implements FMatrix {
-                                private final float[] data;
+                                float[] data;
                                 
                                 public %2$s() {
                                     this.data = new float[%5$d];

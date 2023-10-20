@@ -1,6 +1,7 @@
 package ch.szclsb.tjv.task;
 
 import ch.szclsb.tjv.task.genrator.ClassWriter;
+import ch.szclsb.tjv.task.genrator.pojo.PojoMatrixApiWriter;
 import ch.szclsb.tjv.task.genrator.pojo.PojoMatrixWriter;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.NamedDomainObjectContainer;
@@ -33,30 +34,23 @@ public abstract class GenerateMatrixTask extends DefaultTask {
         var dir = getOutputDir().get().getAsFile().toPath();
         var packageName = getMatrixPackage().get();
         Collection<ClassWriter> classWriters = Set.of(
-                new PojoMatrixWriter(dir, packageName)
+                new PojoMatrixWriter(dir, packageName),
+                new PojoMatrixApiWriter(dir, packageName)
         );
 
-        System.out.println("Clearing output dir");
-        try {
-            prepareDir(dir);
-            System.out.println("done");
-
-            // generating classes
-            getMatrices().forEach(matrixDef -> {
-                System.out.println("Start generating classes for " + matrixDef.getName());
-                classWriters.forEach(writer -> {
-                    System.out.println("Using writer " + writer.getClass().getSimpleName());
-                    try {
-                        writer.write(matrixDef);
-                    } catch (IOException ioe) {
-                        System.err.println(ioe.getMessage());
-                    }
-                });
+        // generating classes
+        getMatrices().forEach(matrixDef -> {
+            System.out.println("Start generating classes for " + matrixDef.getName());
+            classWriters.forEach(writer -> {
+                System.out.println("Using writer " + writer.getClass().getSimpleName());
+                try {
+                    writer.write(matrixDef);
+                } catch (IOException ioe) {
+                    System.err.println(ioe.getMessage());
+                }
             });
-            System.out.println("done");
-        } catch (IOException ioe) {
-            System.err.println(ioe.getMessage());
-        }
+        });
+        System.out.println("done");
     }
 
     private void prepareDir(Path dir) throws IOException {
