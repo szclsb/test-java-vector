@@ -20,7 +20,8 @@ public class PojoMatrixWriter extends FileWriter {
         var rows = matrixDef.getRows().get();
         var columns = matrixDef.getColumns().get();
         var size = rows * columns;
-        writeFile(matrixDef.getName(), writer -> {
+        var className = "Pojo" + matrixDef.getName();
+        writeFile(className, writer -> {
             writer.write(String.format("""
                             // GENERATED CLASS, DO NOT MODIFY THIS CLASS: CHANGES WILL BE OVERWRITTEN
                             package %1$s;
@@ -82,7 +83,7 @@ public class PojoMatrixWriter extends FileWriter {
                                     return Arrays.toString(data);
                                 }
                             }
-                            """, generatedPackage, matrixDef.getName(), rows, columns, size,
+                            """, generatedPackage, className, rows, columns, size,
                     incStream(size)
                             .map(x -> "float a" + x)
                             .collect(Collectors.joining(", ")),

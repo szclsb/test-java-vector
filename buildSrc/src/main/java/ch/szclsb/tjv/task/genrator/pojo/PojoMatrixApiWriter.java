@@ -23,7 +23,8 @@ public class PojoMatrixApiWriter extends FileWriter {
         var rows = matrixDef.getRows().get();
         var columns = matrixDef.getColumns().get();
         var size = rows * columns;
-        var apiName = matrixDef.getName() + "Api";
+        var matName = "Pojo" + matrixDef.getName();
+        var apiName = matName + "Api";
         // todo multiplication for all available matrices
         writeFile(apiName, writer -> {
             writer.write(String.format("""
@@ -39,15 +40,15 @@ public class PojoMatrixApiWriter extends FileWriter {
                             return INSTANCE;
                         }
                         
-                    """, generatedPackage, apiName, matrixDef.getName()));
-            writeMatrixEquality(writer, matrixDef.getName(), size);
-            writeMatrixMethod(writer, "add", "+", matrixDef.getName(), size);
-            writeScalarMethod(writer, "add", "+", matrixDef.getName(), "b", size);
-            writeMatrixMethod(writer, "sub", "-", matrixDef.getName(), size);
-            writeScalarMethod(writer, "sub", "-", matrixDef.getName(), "b", size);
-            writeMatrixMultiplication(writer, matrixDef.getName(), size);
-            writeMatrixMethod(writer, "elemMul", "*", matrixDef.getName(), size);
-            writeScalarMethod(writer, "scale", "*", matrixDef.getName(), "s", size);
+                    """, generatedPackage, apiName, matName));
+            writeMatrixEquality(writer, matName, size);
+            writeMatrixMethod(writer, "add", "+", matName, size);
+            writeScalarMethod(writer, "add", "+", matName, "b", size);
+            writeMatrixMethod(writer, "sub", "-", matName, size);
+            writeScalarMethod(writer, "sub", "-", matName, "b", size);
+            writeMatrixMultiplication(writer, matName, size);
+            writeMatrixMethod(writer, "elemMul", "*", matName, size);
+            writeScalarMethod(writer, "scale", "*", matName, "s", size);
             writer.write("}");
         });
     }
