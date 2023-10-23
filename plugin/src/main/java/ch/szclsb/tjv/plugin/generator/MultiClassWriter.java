@@ -1,4 +1,4 @@
-package ch.szclsb.tjv.plugin.genrator;
+package ch.szclsb.tjv.plugin.generator;
 
 import ch.szclsb.tjv.plugin.MatrixDefinition;
 

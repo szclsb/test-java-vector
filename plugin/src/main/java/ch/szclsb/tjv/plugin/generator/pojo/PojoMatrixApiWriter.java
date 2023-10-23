@@ -1,8 +1,8 @@
-package ch.szclsb.tjv.plugin.genrator.pojo;
+package ch.szclsb.tjv.plugin.generator.pojo;
 
 import ch.szclsb.tjv.plugin.MatrixDefinition;
-import ch.szclsb.tjv.plugin.genrator.ClassWriter;
-import ch.szclsb.tjv.plugin.genrator.FileWriter;
+import ch.szclsb.tjv.plugin.generator.ClassWriter;
+import ch.szclsb.tjv.plugin.generator.FileWriter;
 import org.apache.maven.plugin.logging.Log;
 
 import java.io.IOException;

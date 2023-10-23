@@ -1,10 +1,10 @@
 package ch.szclsb.tjv.plugin;
 
-import ch.szclsb.tjv.plugin.genrator.ClassWriter;
-import ch.szclsb.tjv.plugin.genrator.MultiClassWriter;
-import ch.szclsb.tjv.plugin.genrator.TestDataProviderWriter;
-import ch.szclsb.tjv.plugin.genrator.pojo.PojoMatrixApiWriter;
-import ch.szclsb.tjv.plugin.genrator.pojo.PojoMatrixWriter;
+import ch.szclsb.tjv.plugin.generator.ClassWriter;
+import ch.szclsb.tjv.plugin.generator.MultiClassWriter;
+import ch.szclsb.tjv.plugin.generator.TestDataProviderWriter;
+import ch.szclsb.tjv.plugin.generator.pojo.PojoMatrixApiWriter;
+import ch.szclsb.tjv.plugin.generator.pojo.PojoMatrixWriter;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
