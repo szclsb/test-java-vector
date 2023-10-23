@@ -1,7 +1,6 @@
-package ch.szclsb.jvpt;
+package ch.szclsb.tjv;
 
-import ch.szclsb.tjv.PojoFMatrix2x2;
-import ch.szclsb.tjv.PojoFMatrix2x2Api;
+
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 

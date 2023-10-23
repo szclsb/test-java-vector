@@ -1,7 +1,8 @@
-package ch.szclsb.tjv.task.genrator.pojo;
+package ch.szclsb.tjv.plugin.genrator.pojo;
 
-import ch.szclsb.tjv.task.MatrixDefinition;
-import ch.szclsb.tjv.task.genrator.FileWriter;
+import ch.szclsb.tjv.plugin.MatrixDefinition;
+import ch.szclsb.tjv.plugin.genrator.FileWriter;
+import org.apache.maven.plugin.logging.Log;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -10,15 +11,15 @@ import java.util.stream.Collectors;
 public class PojoMatrixWriter extends FileWriter {
     private final String generatedPackage;
 
-    public PojoMatrixWriter(Path dir, String generatedPackage) {
-        super(dir);
+    public PojoMatrixWriter(Log logger, Path dir, String generatedPackage) {
+        super(logger, dir);
         this.generatedPackage = generatedPackage;
     }
 
     @Override
     public void write(MatrixDefinition matrixDef) throws IOException {
-        var rows = matrixDef.getRows().get();
-        var columns = matrixDef.getColumns().get();
+        var rows = matrixDef.getRows();
+        var columns = matrixDef.getColumns();
         var size = rows * columns;
         var className = "Pojo" + matrixDef.getName();
         writeFile(className, writer -> {
@@ -26,10 +27,9 @@ public class PojoMatrixWriter extends FileWriter {
                             // GENERATED CLASS, DO NOT MODIFY THIS CLASS: CHANGES WILL BE OVERWRITTEN
                             package %1$s;
                             
-                            import ch.szclsb.tjv.*;
                             import java.util.Arrays;
                                                 
-                            public class %2$s implements FMatrix {
+                            public class %2$s implements ch.szclsb.tjv.FMatrix {
                                 float[] data;
                                 
                                 public %2$s() {

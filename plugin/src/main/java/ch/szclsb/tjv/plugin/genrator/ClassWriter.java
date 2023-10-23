@@ -1,8 +1,7 @@
-package ch.szclsb.tjv.task.genrator;
+package ch.szclsb.tjv.plugin.genrator;
 
-import ch.szclsb.tjv.task.MatrixDefinition;
+import ch.szclsb.tjv.plugin.MatrixDefinition;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
 
 public interface ClassWriter {

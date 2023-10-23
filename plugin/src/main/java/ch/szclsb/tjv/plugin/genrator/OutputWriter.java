@@ -1,4 +1,4 @@
-package ch.szclsb.tjv.task.genrator;
+package ch.szclsb.tjv.plugin.genrator;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

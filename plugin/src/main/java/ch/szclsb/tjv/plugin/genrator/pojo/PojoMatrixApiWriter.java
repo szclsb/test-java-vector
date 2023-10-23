@@ -1,27 +1,25 @@
-package ch.szclsb.tjv.task.genrator.pojo;
+package ch.szclsb.tjv.plugin.genrator.pojo;
 
-import ch.szclsb.tjv.task.MatrixDefinition;
-import ch.szclsb.tjv.task.genrator.FileWriter;
+import ch.szclsb.tjv.plugin.MatrixDefinition;
+import ch.szclsb.tjv.plugin.genrator.FileWriter;
+import org.apache.maven.plugin.logging.Log;
 
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Path;
-import java.util.stream.Collectors;
-
-import static org.gradle.internal.impldep.org.yaml.snakeyaml.nodes.Tag.STR;
 
 public class PojoMatrixApiWriter extends FileWriter {
     private final String generatedPackage;
 
-    public PojoMatrixApiWriter(Path dir, String generatedPackage) {
-        super(dir);
+    public PojoMatrixApiWriter(Log logger, Path dir, String generatedPackage) {
+        super(logger, dir);
         this.generatedPackage = generatedPackage;
     }
 
     @Override
     public void write(MatrixDefinition matrixDef) throws IOException {
-        var rows = matrixDef.getRows().get();
-        var columns = matrixDef.getColumns().get();
+        var rows = matrixDef.getRows();
+        var columns = matrixDef.getColumns();
         var size = rows * columns;
         var matName = "Pojo" + matrixDef.getName();
         var apiName = matName + "Api";
@@ -31,7 +29,7 @@ public class PojoMatrixApiWriter extends FileWriter {
                     // GENERATED CLASS, DO NOT MODIFY THIS CLASS: CHANGES WILL BE OVERWRITTEN
                     package %1$s;
                                         
-                    public class %2$s implements FMatrixApi<%3$s> {
+                    public class %2$s implements ch.szclsb.tjv.FMatrixApi<%3$s> {
                         private static final %2$s INSTANCE = new %2$s();
                         
                         private %2$s() {}
@@ -56,11 +54,11 @@ public class PojoMatrixApiWriter extends FileWriter {
     private void writeMatrixEquality(Writer writer, String typeName, int size) throws IOException {
         writer.write(String.format("""
                     public boolean equals(%1$s A, %1$s B, float tol) {
-                        return MathUtils.isFloatEquals(A.data[0], B.data[0])
+                        return ch.szclsb.tjv.MathUtils.isFloatEquals(A.data[0], B.data[0])
                 """, typeName));
         for (var i = 1; i < size; i++) {
             writer.write(String.format("""
-                                && MathUtils.isFloatEquals(A.data[%1$d], B.data[%1$d])%2$s
+                                && ch.szclsb.tjv.MathUtils.isFloatEquals(A.data[%1$d], B.data[%1$d])%2$s
                     """, i, i + 1 == size ? ";" : ""));
         }
         writer.write("""
