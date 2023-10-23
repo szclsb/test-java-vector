@@ -12,8 +12,8 @@ public class MatrixDefinition {
     @Parameter(property = "columns")
     private int columns;
 
-//    @Parameter(property = "testData")
-//    private MatrixTestData testData;
+    @Parameter(property = "testData")
+    private MatrixTestData testData;
 
     public String getName() {
         return name;
@@ -27,7 +27,7 @@ public class MatrixDefinition {
         return columns;
     }
 
-//    public MatrixTestData getTestData() {
-//        return testData;
-//    }
+    public MatrixTestData getTestData() {
+        return testData;
+    }
 }

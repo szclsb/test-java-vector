@@ -1,6 +1,7 @@
 package ch.szclsb.tjv.plugin.genrator.pojo;
 
 import ch.szclsb.tjv.plugin.MatrixDefinition;
+import ch.szclsb.tjv.plugin.genrator.ClassWriter;
 import ch.szclsb.tjv.plugin.genrator.FileWriter;
 import org.apache.maven.plugin.logging.Log;
 
@@ -8,7 +9,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.stream.Collectors;
 
-public class PojoMatrixWriter extends FileWriter {
+public class PojoMatrixWriter extends FileWriter implements ClassWriter {
     private final String generatedPackage;
 
     public PojoMatrixWriter(Log logger, Path dir, String generatedPackage) {

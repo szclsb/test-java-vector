@@ -7,5 +7,9 @@ public class MathUtils {
         return Math.abs(a - b) < TOLERANCE;
     }
 
+    private static long cantorPairing(int x, int y) {
+        return ((x + y) * (x + y + 1L) + y) / 2L;
+    }
+
     private MathUtils() {}
 }

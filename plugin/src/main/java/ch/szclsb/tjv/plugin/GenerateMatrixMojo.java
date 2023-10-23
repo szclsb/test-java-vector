@@ -1,6 +1,8 @@
 package ch.szclsb.tjv.plugin;
 
 import ch.szclsb.tjv.plugin.genrator.ClassWriter;
+import ch.szclsb.tjv.plugin.genrator.MultiClassWriter;
+import ch.szclsb.tjv.plugin.genrator.TestDataProviderWriter;
 import ch.szclsb.tjv.plugin.genrator.pojo.PojoMatrixApiWriter;
 import ch.szclsb.tjv.plugin.genrator.pojo.PojoMatrixWriter;
 import org.apache.maven.plugin.AbstractMojo;
@@ -16,7 +18,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
 
 @Mojo(name = "generate-matrix")
@@ -31,17 +32,21 @@ public class GenerateMatrixMojo extends AbstractMojo {
     private String generatePackage;
 
     @Parameter(property = "matrixDefinitions")
-    private List<MatrixDefinition> matrixDefinitions;
+    private Collection<MatrixDefinition> matrixDefinitions;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         var dir = outputDirectory.toPath().resolve(generatePackage.replace(".", "/"));
+        Collection<MultiClassWriter> multiClassWriters = Set.of(
+                new TestDataProviderWriter(getLog(), dir, generatePackage)
+        );
         Collection<ClassWriter> classWriters = Set.of(
                 new PojoMatrixWriter(getLog(), dir, generatePackage),
                 new PojoMatrixApiWriter(getLog(), dir, generatePackage)
         );
 
-        project.addCompileSourceRoot(dir.toString());
+        // add additional source root
+        project.addCompileSourceRoot(outputDirectory.getAbsolutePath());
         // prepare directory
         getLog().info("Clearing build directory " + dir);
         try {
@@ -50,6 +55,16 @@ public class GenerateMatrixMojo extends AbstractMojo {
         } catch (IOException ioe) {
             getLog().error(ioe.getMessage(), ioe);
         }
+        // generating multi classes
+        getLog().info("Start generating multi classes");
+        multiClassWriters.forEach(writer -> {
+            getLog().info("  Using writer " + writer.getClass().getSimpleName());
+            try {
+                writer.write(matrixDefinitions);
+            } catch (IOException ioe) {
+                getLog().error(ioe.getMessage(), ioe);
+            }
+        });
         // generating classes
         matrixDefinitions.forEach(matrixDef -> {
             getLog().info("Start generating classes for " + matrixDef.getName());
@@ -74,8 +89,8 @@ public class GenerateMatrixMojo extends AbstractMojo {
                         .forEach(path -> {
                             try {
                                 Files.delete(path);
-                            } catch (IOException e) {
-                                System.err.println("error: " + e.getMessage());
+                            } catch (IOException ioe) {
+                                getLog().error(ioe.getMessage(), ioe);
                             }
                         });
             }

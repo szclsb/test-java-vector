@@ -12,7 +12,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-public abstract class FileWriter implements ClassWriter {
+public abstract class FileWriter {
     private final Log logger;
     private final Path dir;
 

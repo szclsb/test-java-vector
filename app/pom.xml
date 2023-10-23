@@ -28,6 +28,14 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>ch.szclsb.test.javavec</groupId>
                 <artifactId>generate-matrix-plugin</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
@@ -47,11 +55,18 @@
                             <name>FMatrix2x2</name>
                             <rows>2</rows>
                             <columns>2</columns>
-<!--                            <testData>-->
-<!--                                <matrixA>0.0,-0.2,0.5,1.2</matrixA>-->
-<!--                                <matrixB>0,1,2.0,3.0</matrixB>-->
-<!--                                <scalarB>-1.5</scalarB>-->
-<!--                            </testData>-->
+                            <testData>
+                                <matrixA>1,2,3,4</matrixA>
+                                <matrixB>2,-4,6,-8</matrixB>
+                                <scalarB>-3</scalarB>
+                                <matrixAddR>3,-2,9,-4</matrixAddR>
+                                <scalarAddR>-2,-1,0,1</scalarAddR>
+                                <matrixSubR>-1,6,-3,12</matrixSubR>
+                                <scalarSubR>4,5,6,7</scalarSubR>
+                                <matrixMulR>0,0,0,0</matrixMulR>
+                                <matrixElemMulR>2,-8,18,-32</matrixElemMulR>
+                                <scalarScaleR>-3,-6,-9,-12</scalarScaleR>
+                            </testData>
                         </matrixDefinition>
                         <matrixDefinition>
                             <name>FMatrix4x4</name>
